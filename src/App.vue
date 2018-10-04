@@ -70,27 +70,27 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import HelloWorld from './components/HelloWorld';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
   },
-  data () {
+  data() {
     return {
       clipped: false,
       drawer: true,
       fixed: false,
       items: [{
         icon: 'bubble_chart',
-        title: 'Inspire'
+        title: 'Inspire',
       }],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
-    }
-  }
-}
+      title: 'Vuetify.js',
+    };
+  },
+};
 </script>
