@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
+    "genetic-js": "^0.1.14",
     "vue": "^2.5.17",
     "vuetify": "^1.2.0"
   },
