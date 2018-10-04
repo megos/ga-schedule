@@ -1,5 +1,4 @@
 # ga-schedule
-Schedule with Genetic Argorithm
 
 ## Project setup
 ```
