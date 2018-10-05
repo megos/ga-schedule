@@ -31,7 +31,7 @@ export default {
     return {
       last: null,
       userData: {
-        solution: 'hogehogehogehoge',
+        solution: 'First, solve the problem. Then, write the code.',
       },
     };
   },
