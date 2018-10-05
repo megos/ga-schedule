@@ -30,6 +30,9 @@ export default {
   data() {
     return {
       last: null,
+      userData: {
+        solution: 'hogehogehogehoge',
+      },
     };
   },
   created() {
@@ -37,7 +40,7 @@ export default {
     genetic.select1 = Genetic.Select1.Tournament2;
     genetic.select2 = Genetic.Select2.Tournament2;
 
-    genetic.seed = function () {
+    genetic.seed = () => {
       function randomString(len) {
         let text = '';
         const charset = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -49,9 +52,10 @@ export default {
       }
 
       // create random strings that are equal in length to solution
-      return randomString(this.userData.solution.length);
+      return randomString(genetic.userData.solution.length);
     };
-    genetic.mutate = function (entity) {
+
+    genetic.mutate = (entity) => {
       function replaceAt(str, index, character) {
         return str.substr(0, index) + character + str.substr(index + character.length);
       }
@@ -59,11 +63,13 @@ export default {
       // chromosomal drift
       const i = Math.floor(Math.random() * entity.length);
       return replaceAt(
-        entity, i,
+        entity,
+        i,
         String.fromCharCode(entity.charCodeAt(i) + (Math.floor(Math.random() * 2) ? 1 : -1)),
       );
     };
-    genetic.crossover = function (mother, father) {
+
+    genetic.crossover = (mother, father) => {
       // two-point crossover
       const len = mother.length;
       let ca = Math.floor(Math.random() * len);
@@ -79,24 +85,25 @@ export default {
 
       return [son, daughter];
     };
-    genetic.fitness = function (entity) {
+
+    genetic.fitness = (entity) => {
       let fitness = 0;
 
       let i;
       for (i = 0; i < entity.length; ++i) {
         // increase fitness for each character that matches
-        if (entity[i] === this.userData.solution[i]) { fitness += 1; }
+        if (entity[i] === genetic.userData.solution[i]) { fitness += 1; }
 
         // award fractions of a point as we get warmer
         fitness += (127 - Math.abs(entity.charCodeAt(i)
-        - this.userData.solution.charCodeAt(i))) / 50;
+        - genetic.userData.solution.charCodeAt(i))) / 50;
       }
       return fitness;
     };
-    genetic.generation = function (pop) {
+
+    genetic.generation = pop =>
       // stop running once we've reached the solution
-      return pop[0].entity !== this.userData.solution;
-    };
+      pop[0].entity !== genetic.userData.solution;
 
     genetic.notification = (pop) => {
       const value = pop[0].entity;
@@ -115,9 +122,7 @@ export default {
         mutation: 0.3,
         skip: 20,
       },
-      {
-        solution: 'hogehogehogehoge',
-      },
+      this.userData,
     );
   },
 };
