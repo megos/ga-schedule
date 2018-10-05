@@ -3,6 +3,7 @@
     <v-slide-y-transition mode="out-in">
       <v-layout column align-center>
         <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
+        <div>{{ gen }}</div>
         <div>{{ last }}</div>
         <blockquote>
           &#8220;First, solve the problem. Then, write the code.&#8221;
@@ -30,8 +31,9 @@ export default {
   data() {
     return {
       last: null,
+      gen: 0,
       userData: {
-        solution: 'First, solve the problem. Then, write the code.',
+        solution: '0101010101010101010101010101000000000000000000000000000',
       },
     };
   },
@@ -43,7 +45,7 @@ export default {
     genetic.seed = () => {
       function randomString(len) {
         let text = '';
-        const charset = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        const charset = '01';
         for (let i = 0; i < len; i++) {
           text += charset.charAt(Math.floor(Math.random() * charset.length));
         }
@@ -105,13 +107,14 @@ export default {
       // stop running once we've reached the solution
       pop[0].entity !== genetic.userData.solution;
 
-    genetic.notification = (pop) => {
+    genetic.notification = (pop, gen) => {
       const value = pop[0].entity;
       this.last = this.last || value;
 
       if (pop !== 0 && value === this.last) { return; }
 
       this.last = value;
+      this.gen = gen;
     };
 
     genetic.evolve(
