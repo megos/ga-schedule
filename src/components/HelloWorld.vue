@@ -98,7 +98,7 @@ export default {
       return pop[0].entity !== this.userData.solution;
     };
 
-    genetic.notification = function (pop) {
+    genetic.notification = (pop) => {
       const value = pop[0].entity;
       this.last = this.last || value;
 
