@@ -106,6 +106,9 @@ export default {
     genetic.notification = (pop, gen) => {
       const value = pop[0].entity;
       this.last = this.last || value;
+      if (this.last === value) {
+        return;
+      }
       this.last = value;
       this.gen = gen;
     };
