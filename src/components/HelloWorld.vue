@@ -30,8 +30,6 @@ export default {
     return {
       last: null,
       gen: 0,
-      col: 31,
-      row: 7,
       hotSettings: {
         startCols: 31,
         startRows: 7,
