@@ -36,13 +36,9 @@ export default {
         col: 7,
         row: 3,
         charset: '01',
-        randomString: (len) => {
-          let text = '';
-          for (let i = 0; i < len; i++) {
-            text += genetic.userData.charset.charAt(Math.floor(Math.random() * genetic.userData.charset.length));
-          }
-          return text;
-        },
+        randomString: () =>
+          genetic.userData.charset.charAt(Math.floor(Math.random()
+        * genetic.userData.charset.length)),
       },
     };
   },
@@ -51,9 +47,13 @@ export default {
     genetic.select1 = Genetic.Select1.Tournament2;
     genetic.select2 = Genetic.Select2.Tournament2;
 
-    genetic.seed = () =>
-      // create random strings that are equal in length to solution
-      genetic.userData.randomString(genetic.userData.col * genetic.userData.row);
+    genetic.seed = () => {
+      let text = '';
+      for (let i = 0; i < genetic.userData.col * genetic.userData.row; i++) {
+        text += genetic.userData.randomString();
+      }
+      return text;
+    };
 
     genetic.mutate = (entity) => {
       function replaceAt(str, index, character) {
@@ -65,7 +65,7 @@ export default {
       return replaceAt(
         entity,
         i,
-        genetic.userData.charset.charAt(Math.floor(Math.random() * genetic.userData.charset.length)),
+        genetic.userData.randomString(),
       );
     };
 
