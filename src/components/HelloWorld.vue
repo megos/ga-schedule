@@ -99,13 +99,9 @@ export default {
       return fitness;
     };
 
-    genetic.notification = (pop, gen, stats) => {
+    genetic.notification = (pop, gen) => {
       const value = pop[0].entity;
       this.last = this.last || value;
-
-      // if (pop !== 0 && value === this.last) { return; }
-
-      console.log(stats);
       this.last = value;
       this.gen = gen;
     };
