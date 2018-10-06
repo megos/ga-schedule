@@ -36,6 +36,7 @@ export default {
         startCols: 31,
         startRows: 7,
         data: null,
+        rowHeaderWidth: 100,
         colHeaders: [...Array(31)].map((a, idx) => moment().add(idx, 'days').format('MM/DD')),
         rowHeaders: [...Array(7)].map((a, idx) => `クルー${idx}`),
       },
