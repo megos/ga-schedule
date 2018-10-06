@@ -4,6 +4,7 @@
       <v-layout column align-center>
         <div>{{ gen }}</div>
         <div>{{ last }}</div>
+        <HotTable ref="hotTableComponent" :settings="hotSettings"></HotTable>
         <v-btn @click="generate">シフト生成</v-btn>
       </v-layout>
     </v-slide-y-transition>
@@ -12,11 +13,17 @@
 
 <script>
 import Genetic from 'genetic-js';
+import { HotTable } from '@handsontable/vue';
+import Handsontable from 'handsontable';
+import 'handsontable/dist/handsontable.full.min.css';
 
 const genetic = Genetic.create();
 
 export default {
   name: 'HelloWorld',
+  components: {
+    HotTable,
+  },
   props: {
     msg: String,
   },
@@ -24,6 +31,10 @@ export default {
     return {
       last: null,
       gen: 0,
+      hotSettings: {
+        data: Handsontable.helper.createSpreadsheetData(4, 4),
+        colHeaders: true,
+      },
       userData: {
         col: 7,
         row: 3,
@@ -86,7 +97,7 @@ export default {
         for (let row = 0; row < genetic.userData.row; row++) {
           const idx = col + (row * genetic.userData.col);
           if (col < genetic.userData.col - 1 && entity[idx] === entity[idx + 1]) {
-            fitness += 1;
+            fitness += 0.2;
           }
           workers += (entity[idx] === '1' ? 1 : 0);
         }
@@ -96,12 +107,13 @@ export default {
     };
 
     genetic.notification = (pop, gen) => {
-      const value = pop[0].entity;
+      const value = pop[0].entity.replace(/0/g, '×').replace(/1/g, '○');
       this.last = this.last || value;
       if (this.last === value) {
         return;
       }
       this.last = value;
+      this.$refs.hotTableComponent.hotInstance.loadData([...Array(genetic.userData.row)].map((c, idx) => value.substr(idx * genetic.userData.col, genetic.userData.col).split('')));
       this.gen = gen;
     };
   },
