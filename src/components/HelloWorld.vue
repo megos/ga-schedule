@@ -92,7 +92,11 @@ export default {
       for (let col = 0; col < genetic.userData.col; col++) {
         let workers = 0;
         for (let row = 0; row < genetic.userData.row; row++) {
-          workers += (entity[col + (row * genetic.userData.col)] === '1' ? 1 : 0);
+          const idx = col + (row * genetic.userData.col);
+          if (col < genetic.userData.col - 1 && entity[idx] === entity[idx + 1]) {
+            fitness += 1;
+          }
+          workers += (entity[idx] === '1' ? 1 : 0);
         }
         fitness += Math.abs(2 - workers);
       }
