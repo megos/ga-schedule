@@ -2,17 +2,9 @@
   <v-container fluid>
     <v-slide-y-transition mode="out-in">
       <v-layout column align-center>
-        <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
         <div>{{ gen }}</div>
         <div>{{ last }}</div>
-        <blockquote>
-          &#8220;First, solve the problem. Then, write the code.&#8221;
-          <footer>
-            <small>
-              <em>&mdash;John Johnson</em>
-            </small>
-          </footer>
-        </blockquote>
+        <v-btn @click="generate">シフト生成</v-btn>
       </v-layout>
     </v-slide-y-transition>
   </v-container>
@@ -112,17 +104,20 @@ export default {
       this.last = value;
       this.gen = gen;
     };
-
-    genetic.evolve(
-      {
-        iterations: 100,
-        size: 100,
-        crossover: 0.3,
-        mutation: 0.3,
-        skip: 20,
-      },
-      this.userData,
-    );
+  },
+  methods: {
+    generate() {
+      genetic.evolve(
+        {
+          iterations: 100,
+          size: 100,
+          crossover: 0.3,
+          mutation: 0.3,
+          skip: 20,
+        },
+        this.userData,
+      );
+    },
   },
 };
 </script>
