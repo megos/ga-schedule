@@ -43,7 +43,7 @@ export default {
       userData: {
         col: 31,
         row: 7,
-        charset: '01',
+        charset: '×○',
         randomString: () =>
           genetic.userData.charset.charAt(Math.floor(Math.random()
         * genetic.userData.charset.length)),
@@ -104,7 +104,7 @@ export default {
           if (col < genetic.userData.col - 1 && entity[idx] === entity[idx + 1]) {
             fitness += 0.5;
           }
-          workers += (entity[idx] === '1' ? 1 : 0);
+          workers += (entity[idx] === '○' ? 1 : 0);
         }
         fitness += Math.abs(5 - workers);
       }
@@ -112,7 +112,7 @@ export default {
     };
 
     genetic.notification = (pop, gen) => {
-      const value = pop[0].entity.replace(/0/g, '×').replace(/1/g, '○');
+      const value = pop[0].entity;
       this.last = this.last || value;
       if (this.last === value) {
         return;
