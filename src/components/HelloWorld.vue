@@ -14,8 +14,8 @@
 <script>
 import Genetic from 'genetic-js';
 import { HotTable } from '@handsontable/vue';
-import Handsontable from 'handsontable';
 import 'handsontable/dist/handsontable.full.min.css';
+import moment from 'moment';
 
 const genetic = Genetic.create();
 
@@ -32,8 +32,9 @@ export default {
       last: null,
       gen: 0,
       hotSettings: {
-        data: Handsontable.helper.createSpreadsheetData(4, 4),
-        colHeaders: true,
+        autoColumnSize: true,
+        colHeaders: [...Array(7)].map((a, idx) => moment().add(idx, 'days').format('MM/DD')),
+        rowHeaders: [...Array(3)].map((a, idx) => `クルー${idx}`),
       },
       userData: {
         col: 7,
