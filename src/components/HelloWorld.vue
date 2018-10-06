@@ -33,29 +33,27 @@ export default {
       last: null,
       gen: 0,
       userData: {
-        solution: '0101010101010101010101010101000000000000000000000000000',
+        col: 7,
+        row: 3,
+        charset: '01',
+        randomString: (len) => {
+          let text = '';
+          for (let i = 0; i < len; i++) {
+            text += genetic.userData.charset.charAt(Math.floor(Math.random() * genetic.userData.charset.length));
+          }
+          return text;
+        },
       },
     };
   },
   created() {
-    genetic.optimize = Genetic.Optimize.Maximize;
+    genetic.optimize = Genetic.Optimize.Minimize;
     genetic.select1 = Genetic.Select1.Tournament2;
     genetic.select2 = Genetic.Select2.Tournament2;
 
-    genetic.seed = () => {
-      function randomString(len) {
-        let text = '';
-        const charset = '01';
-        for (let i = 0; i < len; i++) {
-          text += charset.charAt(Math.floor(Math.random() * charset.length));
-        }
-
-        return text;
-      }
-
+    genetic.seed = () =>
       // create random strings that are equal in length to solution
-      return randomString(genetic.userData.solution.length);
-    };
+      genetic.userData.randomString(genetic.userData.col * genetic.userData.row);
 
     genetic.mutate = (entity) => {
       function replaceAt(str, index, character) {
@@ -67,7 +65,7 @@ export default {
       return replaceAt(
         entity,
         i,
-        String.fromCharCode(entity.charCodeAt(i) + (Math.floor(Math.random() * 2) ? 1 : -1)),
+        genetic.userData.charset.charAt(Math.floor(Math.random() * genetic.userData.charset.length)),
       );
     };
 
@@ -91,36 +89,31 @@ export default {
     genetic.fitness = (entity) => {
       let fitness = 0;
 
-      let i;
-      for (i = 0; i < entity.length; ++i) {
-        // increase fitness for each character that matches
-        if (entity[i] === genetic.userData.solution[i]) { fitness += 1; }
-
-        // award fractions of a point as we get warmer
-        fitness += (127 - Math.abs(entity.charCodeAt(i)
-        - genetic.userData.solution.charCodeAt(i))) / 50;
+      for (let col = 0; col < genetic.userData.col; col++) {
+        let workers = 0;
+        for (let row = 0; row < genetic.userData.row; row++) {
+          workers += (entity.split('')[col + (row * genetic.userData.col)] === '1' ? 1 : 0);
+        }
+        fitness += Math.abs(2 - workers);
       }
       return fitness;
     };
 
-    genetic.generation = pop =>
-      // stop running once we've reached the solution
-      pop[0].entity !== genetic.userData.solution;
-
-    genetic.notification = (pop, gen) => {
+    genetic.notification = (pop, gen, stats) => {
       const value = pop[0].entity;
       this.last = this.last || value;
 
-      if (pop !== 0 && value === this.last) { return; }
+      // if (pop !== 0 && value === this.last) { return; }
 
+      console.log(stats);
       this.last = value;
       this.gen = gen;
     };
 
     genetic.evolve(
       {
-        iterations: 4000,
-        size: 250,
+        iterations: 100,
+        size: 100,
         crossover: 0.3,
         mutation: 0.3,
         skip: 20,
