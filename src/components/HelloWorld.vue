@@ -1,13 +1,12 @@
 <template>
   <v-container fluid>
-    <v-slide-y-transition mode="out-in">
-      <v-layout column align-center>
+      <v-layout column>
         <div>{{ gen }}</div>
-        <div>{{ last }}</div>
-        <HotTable ref="hotTableComponent" :settings="hotSettings"></HotTable>
+        <div class="hot-table">
+          <HotTable ref="hotTableComponent" :settings="hotSettings"></HotTable>
+        </div>
         <v-btn @click="generate">シフト生成</v-btn>
       </v-layout>
-    </v-slide-y-transition>
   </v-container>
 </template>
 
@@ -31,14 +30,18 @@ export default {
     return {
       last: null,
       gen: 0,
+      col: 31,
+      row: 7,
       hotSettings: {
-        autoColumnSize: true,
-        colHeaders: [...Array(7)].map((a, idx) => moment().add(idx, 'days').format('MM/DD')),
-        rowHeaders: [...Array(3)].map((a, idx) => `クルー${idx}`),
+        startCols: 31,
+        startRows: 7,
+        data: null,
+        colHeaders: [...Array(31)].map((a, idx) => moment().add(idx, 'days').format('MM/DD')),
+        rowHeaders: [...Array(7)].map((a, idx) => `クルー${idx}`),
       },
       userData: {
-        col: 7,
-        row: 3,
+        col: 31,
+        row: 7,
         charset: '01',
         randomString: () =>
           genetic.userData.charset.charAt(Math.floor(Math.random()
@@ -98,11 +101,11 @@ export default {
         for (let row = 0; row < genetic.userData.row; row++) {
           const idx = col + (row * genetic.userData.col);
           if (col < genetic.userData.col - 1 && entity[idx] === entity[idx + 1]) {
-            fitness += 0.2;
+            fitness += 0.5;
           }
           workers += (entity[idx] === '1' ? 1 : 0);
         }
-        fitness += Math.abs(2 - workers);
+        fitness += Math.abs(5 - workers);
       }
       return fitness;
     };
@@ -122,7 +125,7 @@ export default {
     generate() {
       genetic.evolve(
         {
-          iterations: 100,
+          iterations: 200,
           size: 100,
           crossover: 0.3,
           mutation: 0.3,
@@ -151,4 +154,10 @@ li {
 a {
   color: #42b983;
 }
+
+.hot-table {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
 </style>
