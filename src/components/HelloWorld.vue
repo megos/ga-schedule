@@ -1,6 +1,22 @@
 <template>
   <v-container fluid>
       <v-layout column>
+        <div>
+          <v-text-field
+            v-model.number="userData.row"
+            type="number"
+            max=10
+            min=0
+            label="従業員数"/>
+        </div>
+        <div>
+          <v-text-field
+            v-model.number="userData.needsEmployee"
+            type="number"
+            max=10
+            min=0
+            label="必要人数"/>
+        </div>
         <div>{{ gen }}</div>
         <div class="hot-table">
           <HotTable ref="hotTableComponent" :settings="hotSettings"></HotTable>
@@ -36,12 +52,13 @@ export default {
         data: null,
         rowHeaderWidth: 100,
         colHeaders: [...Array(31)].map((a, idx) => moment().add(idx, 'days').format('MM/DD')),
-        rowHeaders: [...Array(7)].map((a, idx) => `クルー${idx + 1}`),
+        rowHeaders: [...Array(10)].map((a, idx) => `クルー${idx + 1}`),
       },
       userData: {
         col: 31,
         row: 7,
         charset: '×○',
+        needsEmployee: 5,
         randomString: () =>
           genetic.userData.charset.charAt(Math.floor(Math.random()
         * genetic.userData.charset.length)),
@@ -104,7 +121,7 @@ export default {
           }
           workers += (entity[idx] === '○' ? 1 : 0);
         }
-        fitness += Math.abs(5 - workers);
+        fitness += Math.abs(genetic.userData.needsEmployee - workers);
       }
       return fitness;
     };
