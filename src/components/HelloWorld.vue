@@ -1,22 +1,28 @@
 <template>
   <v-container fluid>
       <v-layout row wrap>
-        <v-flex xs3 md3>
+        <v-flex xs12 md3>
           <v-text-field
-            v-model.number="userData.row"
+            v-model.number="hotSettings.startRows"
             type="number"
             max=10
             min=0
             @change="change"
             label="従業員数"/>
         </v-flex>
-        <v-flex xs3 md3>
+        <v-flex xs12 md3>
           <v-text-field
             v-model.number="userData.needsEmployee"
             type="number"
-            max=10
+            :max="hotSettings.startRows"
             min=0
             label="必要人数"/>
+        </v-flex>
+        <v-flex xs12 md3>
+          <v-date-picker v-model="from"></v-date-picker>
+        </v-flex>
+        <v-flex xs12 md3>
+          <v-date-picker v-model="to"></v-date-picker>
         </v-flex>
         <v-btn @click="generate">シフト生成</v-btn>
         <div class="hot-table">
@@ -46,6 +52,8 @@ export default {
     return {
       last: null,
       gen: 0,
+      from: null,
+      to: null,
       hotSettings: {
         startCols: 31,
         startRows: 7,
@@ -55,8 +63,6 @@ export default {
         rowHeaders: [...Array(10)].map((a, idx) => `クルー${idx + 1}`),
       },
       userData: {
-        col: 31,
-        row: 7,
         charset: '×○',
         needsEmployee: 5,
         randomString: () =>
@@ -139,6 +145,8 @@ export default {
   },
   methods: {
     generate() {
+      this.userData.col = this.hotSettings.startCols;
+      this.userData.row = this.hotSettings.startRows;
       genetic.evolve(
         {
           iterations: 200,
@@ -151,7 +159,7 @@ export default {
       );
     },
     change() {
-      this.$refs.hotTableComponent.hotInstance.loadData([...Array(this.userData.row)].map((c, idx) => '          '.substr(idx * this.userData.col, this.userData.col).split('')));
+      this.$refs.hotTableComponent.hotInstance.updateSettings(this.hotSettings);
     },
   },
 };
