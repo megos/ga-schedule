@@ -1,27 +1,27 @@
 <template>
   <v-container fluid>
-      <v-layout column>
-        <div>
+      <v-layout row wrap>
+        <v-flex xs3 md3>
           <v-text-field
             v-model.number="userData.row"
             type="number"
             max=10
             min=0
+            @change="change"
             label="従業員数"/>
-        </div>
-        <div>
+        </v-flex>
+        <v-flex xs3 md3>
           <v-text-field
             v-model.number="userData.needsEmployee"
             type="number"
             max=10
             min=0
             label="必要人数"/>
-        </div>
-        <div>{{ gen }}</div>
+        </v-flex>
+        <v-btn @click="generate">シフト生成</v-btn>
         <div class="hot-table">
           <HotTable ref="hotTableComponent" :settings="hotSettings"></HotTable>
         </div>
-        <v-btn @click="generate">シフト生成</v-btn>
       </v-layout>
   </v-container>
 </template>
@@ -150,6 +150,9 @@ export default {
         this.userData,
       );
     },
+    change() {
+      this.$refs.hotTableComponent.hotInstance.loadData([...Array(this.userData.row)].map((c, idx) => '          '.substr(idx * this.userData.col, this.userData.col).split('')));
+    },
   },
 };
 </script>
@@ -173,7 +176,7 @@ a {
 
 .hot-table {
     width: 100%;
-    height: 200px;
+    height: 300px;
     overflow: hidden;
   }
 </style>
