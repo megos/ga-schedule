@@ -3,9 +3,6 @@ module.exports = {
   env: {
     node: true,
   },
-  globals: {
-    Genetic: true
-  },
   extends: [
     'plugin:vue/essential',
     '@vue/airbnb',
