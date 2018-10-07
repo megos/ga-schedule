@@ -1,34 +1,38 @@
 <template>
   <v-container fluid>
-      <v-layout row wrap>
-        <v-flex xs12 md3>
-          <v-text-field
-            v-model.number="hotSettings.startRows"
-            type="number"
-            max=10
-            min=0
-            @change="change"
-            label="従業員数"/>
-        </v-flex>
-        <v-flex xs12 md3>
-          <v-text-field
-            v-model.number="userData.needsEmployee"
-            type="number"
-            :max="hotSettings.startRows"
-            min=0
-            label="必要人数"/>
-        </v-flex>
-        <v-flex xs12 md3>
-          <v-date-picker v-model="from"></v-date-picker>
-        </v-flex>
-        <v-flex xs12 md3>
-          <v-date-picker v-model="to"></v-date-picker>
-        </v-flex>
+    <v-layout row wrap>
+      <v-flex xs12 md3>
+        <v-text-field
+          v-model.number="hotSettings.startRows"
+          type="number"
+          max=10
+          min=0
+          @change="change"
+          label="従業員数"/>
+      </v-flex>
+      <v-flex xs12 md3>
+        <v-text-field
+          v-model.number="userData.needsEmployee"
+          type="number"
+          :max="hotSettings.startRows"
+          min=0
+          label="必要人数"/>
+      </v-flex>
+      <v-flex xs12 md3>
+        <v-date-picker v-model="from" locale="ja-jp" @change="change"/>
+      </v-flex>
+      <v-flex xs12 md3>
+        <v-date-picker v-model="to" locale="ja-jp" @change="change"/>
+      </v-flex>
+      <v-flex xs12>
         <v-btn @click="generate">シフト生成</v-btn>
+      </v-flex>
+      <v-flex xs12>
         <div class="hot-table">
-          <HotTable ref="hotTableComponent" :settings="hotSettings"></HotTable>
+          <HotTable ref="hotTableComponent" :settings="hotSettings"/>
         </div>
-      </v-layout>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -52,15 +56,13 @@ export default {
     return {
       last: null,
       gen: 0,
-      from: null,
-      to: null,
+      from: moment().date(1).format('YYYY-MM-DD'),
+      to: moment().endOf('month').format('YYYY-MM-DD'),
       hotSettings: {
         startCols: 31,
         startRows: 7,
         data: null,
         rowHeaderWidth: 100,
-        colHeaders: [...Array(31)].map((a, idx) => moment().add(idx, 'days').format('MM/DD')),
-        rowHeaders: [...Array(10)].map((a, idx) => `クルー${idx + 1}`),
       },
       userData: {
         charset: '×○',
@@ -70,6 +72,9 @@ export default {
         * genetic.userData.charset.length)),
       },
     };
+  },
+  mounted() {
+    this.change();
   },
   created() {
     genetic.optimize = Genetic.Optimize.Minimize;
@@ -159,6 +164,9 @@ export default {
       );
     },
     change() {
+      this.hotSettings.startCols = moment(this.to).diff(this.from, 'days') + 1;
+      this.hotSettings.colHeaders = [...Array(this.hotSettings.startCols)].map((a, idx) => moment(this.from).add(idx, 'days').format('MM/DD'));
+      this.hotSettings.rowHeaders = [...Array(10)].map((a, idx) => `クルー${idx + 1}`);
       this.$refs.hotTableComponent.hotInstance.updateSettings(this.hotSettings);
     },
   },
