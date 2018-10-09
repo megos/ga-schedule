@@ -3,19 +3,21 @@
     <v-layout row wrap>
       <v-flex xs12 md3>
         <v-text-field
-          v-model.number="hotSettings.startRows"
+          v-model.number="startRows"
           type="number"
           max=10
-          min=0
+          min=2
+          :rules="[(value) => 2 <= value && value <= 10 || '2～10人のみ対応です']"
           @change="change"
           label="従業員数"/>
       </v-flex>
       <v-flex xs12 md3>
         <v-text-field
-          v-model.number="userData.needsEmployee"
+          v-model.number="needsEmployee"
           type="number"
-          :max="hotSettings.startRows"
+          :max="startRows"
           min=0
+          :rules="[(value) => 1 <= value && value <= 10 || '1～10人のみ対応です']"
           label="必要人数"/>
       </v-flex>
       <v-flex xs12 md3>
@@ -72,6 +74,28 @@ export default {
   },
   mounted() {
     this.change();
+  },
+  computed: {
+    startRows: {
+      get() {
+        return this.hotSettings.startRows;
+      },
+      set(value) {
+        if (value >= 2 && value <= 10) {
+          this.hotSettings.startRows = value;
+        }
+      },
+    },
+    needsEmployee: {
+      get() {
+        return this.userData.needsEmployee;
+      },
+      set(value) {
+        if (value >= 1 && value <= 10) {
+          this.userData.needsEmployee = value;
+        }
+      },
+    },
   },
   created() {
     genetic.optimize = Genetic.Optimize.Minimize;
