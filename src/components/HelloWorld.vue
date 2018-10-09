@@ -25,7 +25,7 @@
         <v-date-picker v-model="to" locale="ja-jp" @change="change"/>
       </v-flex>
       <v-flex xs12>
-        <v-btn @click="generate">シフト生成</v-btn>
+        <v-btn @click="generate">スケジュール作成</v-btn>
       </v-flex>
       <v-flex xs12>
         <div class="hot-table">
