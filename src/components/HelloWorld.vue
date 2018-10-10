@@ -40,7 +40,12 @@
         <v-card>
           <v-card-title><h4>開始</h4></v-card-title>
           <v-card-text class="tc">
-            <v-date-picker v-model="from" locale="ja-jp" :max="to" :allowed-dates="allowDates" @change="change"/>
+            <v-date-picker
+              v-model="from"
+              locale="ja-jp"
+              :max="to"
+              :allowed-dates="allowDates"
+              @change="change"/>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -48,7 +53,12 @@
         <v-card>
           <v-card-title><h4>終了</h4></v-card-title>
           <v-card-text class="tc">
-            <v-date-picker v-model="to" locale="ja-jp" :min="from" :allowed-dates="allowDates" @change="change"/>
+            <v-date-picker
+              v-model="to"
+              locale="ja-jp"
+              :min="from"
+              :allowed-dates="allowDates"
+              @change="change"/>
           </v-card-text>
         </v-card>
       </v-flex>
