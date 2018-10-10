@@ -1,33 +1,60 @@
 <template>
-  <v-container fluid>
-    <v-layout row wrap>
-      <v-flex xs12 md3>
-        <v-text-field
-          v-model.number="startRows"
-          type="number"
-          max=10
-          min=2
-          :rules="[(value) => 2 <= value && value <= 10 || '2～10人のみ対応です']"
-          @change="change"
-          label="従業員数"/>
+    <v-container
+      fluid
+      grid-list-lg
+      >
+      <v-layout row wrap>
+      <v-flex xs12 md4 offset-md4>
+        Step1. 従業員数を入力してください
+        <v-card>
+          <v-card-text>
+            <v-text-field
+              v-model.number="startRows"
+              type="number"
+              max=10
+              min=2
+              :rules="[(value) => 2 <= value && value <= 10 || '2～10人のみ対応です']"
+              @change="change"
+              label="従業員数"/>
+          </v-card-text>
+        </v-card>
       </v-flex>
-      <v-flex xs12 md3>
-        <v-text-field
-          v-model.number="needsEmployee"
-          type="number"
-          :max="startRows"
-          min=0
-          :rules="[(value) => 1 <= value && value <= 10 || '1～10人のみ対応です']"
-          label="必要人数"/>
+      <v-flex xs12 md4 offset-md4>
+        Step2. 1日に必要な人数を入力してください
+        <v-card>
+          <v-card-text>
+            <v-text-field
+              v-model.number="needsEmployee"
+              type="number"
+              :max="startRows"
+              min=0
+              :rules="[(value) => 1 <= value && value <= 10 || '1～10人のみ対応です']"
+              label="必要人数"/>
+          </v-card-text>
+        </v-card>
       </v-flex>
-      <v-flex xs12 md3>
-        <v-date-picker v-model="from" locale="ja-jp" @change="change"/>
+      <v-flex xs12 offset-md4>
+        Step3. スケジュールを作成する期間を入力してください
       </v-flex>
-      <v-flex xs12 md3>
-        <v-date-picker v-model="to" locale="ja-jp" @change="change"/>
+      <v-flex xs12 md4 offset-md2>
+        <v-card>
+          <v-card-title><h4>開始</h4></v-card-title>
+          <v-card-text class="tc">
+            <v-date-picker v-model="from" locale="ja-jp" @change="change"/>
+          </v-card-text>
+        </v-card>
       </v-flex>
-      <v-flex xs12>
-        <v-btn @click="generate">スケジュール作成</v-btn>
+      <v-flex xs12 md4>
+        <v-card>
+          <v-card-title><h4>終了</h4></v-card-title>
+          <v-card-text class="tc">
+            <v-date-picker v-model="to" locale="ja-jp" @change="change"/>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 md4 offset-md4>
+        <div>Step4. さあ、スケジュールを作成してみましょう！</div>
+        <v-btn color="info" block @click="generate">スケジュール作成</v-btn>
       </v-flex>
       <v-flex xs12>
         <div class="hot-table">
@@ -211,6 +238,9 @@ li {
 }
 a {
   color: #42b983;
+}
+.tc {
+  text-align: center;
 }
 
 .hot-table {

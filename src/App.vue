@@ -2,7 +2,8 @@
   <v-app>
     <v-toolbar
       app
-      :clipped-left="clipped"
+      dark
+      color="primary"
     >
       <v-toolbar-title v-text="title"></v-toolbar-title>
     </v-toolbar>
