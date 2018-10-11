@@ -68,6 +68,7 @@
       </v-flex>
       <v-flex xs12>
         <div class="hot-table">
+          ○：出勤、×：休み
           <HotTable ref="hotTableComponent" :settings="hotSettings"/>
         </div>
       </v-flex>
