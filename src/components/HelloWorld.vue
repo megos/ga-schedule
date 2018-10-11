@@ -102,6 +102,7 @@ export default {
         startRows: 7,
         data: null,
         rowHeaderWidth: 100,
+        contextMenu: true,
       },
       userData: {
         charset: '×○',
