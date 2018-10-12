@@ -75,7 +75,21 @@
       <v-flex xs12>
         以下デモ用
         <div>世代：{{ gen }}</div>
-        <div>評価値：{{ 100 - fitness }}</div>
+        <div>評価値：100点満点中 {{ Math.round(100 - fitness) }}点</div>
+        <v-slider
+          v-model="userData.employeeWeight"
+          :tick-labels="['必要人数は「てげてげ」', ...Array(19).map(() => ''), '必要人数は「しっかり」']"
+          max="2"
+          min="0"
+          step="0.1"
+        ></v-slider>
+        <v-slider
+          v-model="userData.continuityWeight"
+          :tick-labels="['連勤は「少ないほうがいい」', ...Array(9).map(() => ''), '連勤は「多いほうがいい」']"
+          max="1"
+          min="0"
+          step="0.1"
+        ></v-slider>
       </v-flex>
     </v-layout>
   </v-container>
@@ -114,6 +128,8 @@ export default {
       userData: {
         charset: '×○',
         needsEmployee: 5,
+        employeeWeight: 1,
+        continuityWeight: 0.5,
       },
     };
   },
@@ -196,11 +212,11 @@ export default {
         for (let row = 0; row < this.userData.row; row++) {
           const idx = col + (row * this.userData.col);
           if (col < this.userData.col - 1 && entity[idx] === entity[idx + 1]) {
-            fitness += 0.5;
+            fitness += 1 - this.userData.continuityWeight;
           }
           workers += (entity[idx] === '○' ? 1 : 0);
         }
-        fitness += Math.abs(this.userData.needsEmployee - workers);
+        fitness += Math.abs(this.userData.needsEmployee - workers) * this.userData.employeeWeight;
       }
       return fitness;
     };
