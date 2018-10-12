@@ -72,6 +72,11 @@
           <HotTable ref="hotTableComponent" :settings="hotSettings"/>
         </div>
       </v-flex>
+      <v-flex xs12>
+        以下デモ用
+        <div>世代：{{ gen }}</div>
+        <div>評価値：{{ 100 - fitness }}</div>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -96,6 +101,7 @@ export default {
     return {
       last: null,
       gen: 0,
+      fitness: 0,
       from: moment().date(1).format('YYYY-MM-DD'),
       to: moment().endOf('month').format('YYYY-MM-DD'),
       hotSettings: {
@@ -206,6 +212,7 @@ export default {
         return;
       }
       this.last = value;
+      this.fitness = pop[0].fitness;
       this.$refs.hotTableComponent.hotInstance.loadData([...Array(genetic.userData.row)].map((c, idx) => value.substr(idx * genetic.userData.col, genetic.userData.col).split('')));
       this.gen = gen;
     };
