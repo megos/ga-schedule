@@ -78,14 +78,14 @@
         <div>評価値：100点満点中 {{ Math.round(100 - fitness) }}点</div>
         <v-slider
           v-model="userData.employeeWeight"
-          :tick-labels="['必要人数は「てげてげ」', ...Array(19).map(() => ''), '必要人数は「しっかり」']"
+          :tick-labels="['人数は「てげてげ」', ...Array(19).map(() => ''), '人数は「しっかり」']"
           max="2"
           min="0"
           step="0.1"
         ></v-slider>
         <v-slider
           v-model="userData.continuityWeight"
-          :tick-labels="['連勤は「少ないほうがいい」', ...Array(9).map(() => ''), '連勤は「多いほうがいい」']"
+          :tick-labels="['連勤は「少なめ」', ...Array(9).map(() => ''), '連勤は「多め」']"
           max="1"
           min="0"
           step="0.1"
