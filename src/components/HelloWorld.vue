@@ -100,6 +100,7 @@ import Genetic from 'genetic-js';
 import { HotTable } from '@handsontable/vue';
 import 'handsontable/dist/handsontable.full.min.css';
 import moment from 'moment';
+import isMobile from 'ismobilejs';
 
 const genetic = Genetic.create();
 
@@ -254,10 +255,12 @@ export default {
     change() {
       this.hotSettings.startCols = moment(this.to).diff(this.from, 'days') + 1;
       this.hotSettings.colHeaders = [...Array(this.hotSettings.startCols)].map((a, idx) => moment(this.from).add(idx, 'days').format('MM/DD'));
-      this.hotSettings.columns = [...Array(this.hotSettings.startCols)].map(() => ({
-        type: 'dropdown',
-        source: ['○', '×', ''],
-      }));
+      if (!isMobile.any) {
+        this.hotSettings.columns = [...Array(this.hotSettings.startCols)].map(() => ({
+          type: 'dropdown',
+          source: ['○', '×', ''],
+        }));
+      }
       this.hotSettings.rowHeaders = [...Array(10)].map((a, idx) => `クルー${idx + 1}`);
       this.$refs.hotTableComponent.hotInstance.updateSettings(this.hotSettings);
     },
