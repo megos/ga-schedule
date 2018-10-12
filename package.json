@@ -12,7 +12,6 @@
     "@handsontable/vue": "^3.0.0",
     "genetic-js": "^0.1.14",
     "handsontable": "^6.0.1",
-    "ismobilejs": "^0.4.1",
     "moment": "^2.22.2",
     "vue": "^2.5.17",
     "vuetify": "^1.2.0"
