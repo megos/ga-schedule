@@ -115,7 +115,7 @@ export default {
     return {
       last: null,
       gen: 0,
-      fitness: 0,
+      fitness: 100,
       from: moment().date(1).format('YYYY-MM-DD'),
       to: moment().endOf('month').format('YYYY-MM-DD'),
       hotSettings: {
