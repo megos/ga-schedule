@@ -8,18 +8,18 @@
       <v-toolbar-title v-text="title" />
     </v-toolbar>
     <v-content>
-      <HelloWorld />
+      <Top />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import Top from './components/Top'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Top,
   },
   data() {
     return {
