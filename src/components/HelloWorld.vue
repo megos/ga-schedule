@@ -147,9 +147,6 @@ export default {
   components: {
     HotTable,
   },
-  props: {
-    msg: String,
-  },
   data() {
     return {
       last: null,
