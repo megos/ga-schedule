@@ -143,7 +143,6 @@ import moment from 'moment'
 const genetic = Genetic.create()
 
 export default {
-  name: 'HelloWorld',
   components: {
     HotTable,
   },
