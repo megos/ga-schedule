@@ -134,7 +134,7 @@
 </template>
 
 <script>
-/* eslint-disable func-names */
+/* eslint-disable func-names, no-plusplus */
 import Genetic from 'genetic-js'
 import { HotTable } from '@handsontable/vue'
 import 'handsontable/dist/handsontable.full.min.css'
