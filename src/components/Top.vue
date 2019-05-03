@@ -59,7 +59,7 @@
       >
         <v-card>
           <v-card-title><h4>開始</h4></v-card-title>
-          <v-card-text class="tc">
+          <v-card-text class="text-xs-center">
             <v-date-picker
               v-model="from"
               :max="to"
@@ -76,7 +76,7 @@
       >
         <v-card>
           <v-card-title><h4>終了</h4></v-card-title>
-          <v-card-text class="tc">
+          <v-card-text class="text-xs-center">
             <v-date-picker
               v-model="to"
               :min="from"
@@ -304,10 +304,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.tc {
-  text-align: center;
-}
-
 .hot-table {
     width: 100%;
     height: 300px;
