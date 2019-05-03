@@ -3,18 +3,17 @@
     <v-toolbar
       app
       dark
-      color="primary"
-    >
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      color="primary">
+      <v-toolbar-title v-text="title" />
     </v-toolbar>
     <v-content>
-      <HelloWorld/>
+      <HelloWorld />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import HelloWorld from './components/HelloWorld'
 
 export default {
   name: 'App',
@@ -34,7 +33,7 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'てげてげスケジュール',
-    };
+    }
   },
-};
+}
 </script>
