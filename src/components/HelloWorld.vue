@@ -1,14 +1,17 @@
 <template>
   <v-container
     fluid
-    grid-list-lg>
+    grid-list-lg
+  >
     <v-layout
       row
-      wrap>
+      wrap
+    >
       <v-flex
         xs12
         md4
-        offset-md4>
+        offset-md4
+      >
         Step1. 従業員数を入力してください
         <v-card>
           <v-card-text>
@@ -19,14 +22,16 @@
               max="10"
               min="2"
               label="従業員数"
-              @change="change" />
+              @change="change"
+            />
           </v-card-text>
         </v-card>
       </v-flex>
       <v-flex
         xs12
         md4
-        offset-md4>
+        offset-md4
+      >
         Step2. 1日に必要な人数を入力してください
         <v-card>
           <v-card-text>
@@ -36,19 +41,22 @@
               :rules="[(value) => 1 <= value && value <= 10 || '1～10人のみ対応です']"
               type="number"
               min="0"
-              label="必要人数" />
+              label="必要人数"
+            />
           </v-card-text>
         </v-card>
       </v-flex>
       <v-flex
         xs12
-        offset-md4>
+        offset-md4
+      >
         Step3. スケジュールを作成する期間を入力してください
       </v-flex>
       <v-flex
         xs12
         md4
-        offset-md2>
+        offset-md2
+      >
         <v-card>
           <v-card-title><h4>開始</h4></v-card-title>
           <v-card-text class="tc">
@@ -57,13 +65,15 @@
               :max="to"
               :allowed-dates="allowDates"
               locale="ja-jp"
-              @change="change" />
+              @change="change"
+            />
           </v-card-text>
         </v-card>
       </v-flex>
       <v-flex
         xs12
-        md4>
+        md4
+      >
         <v-card>
           <v-card-title><h4>終了</h4></v-card-title>
           <v-card-text class="tc">
@@ -72,26 +82,32 @@
               :min="from"
               :allowed-dates="allowDates"
               locale="ja-jp"
-              @change="change" />
+              @change="change"
+            />
           </v-card-text>
         </v-card>
       </v-flex>
       <v-flex
         xs12
         md4
-        offset-md4>
+        offset-md4
+      >
         <div>Step4. さあ、スケジュールを作成してみましょう！</div>
         <v-btn
           color="info"
           block
-          @click="generate">スケジュール作成</v-btn>
+          @click="generate"
+        >
+          スケジュール作成
+        </v-btn>
       </v-flex>
       <v-flex xs12>
         <div class="hot-table">
           ○：出勤、×：休み
           <HotTable
             ref="hotTableComponent"
-            :settings="hotSettings" />
+            :settings="hotSettings"
+          />
         </div>
       </v-flex>
       <v-flex xs12>
@@ -103,13 +119,15 @@
           :tick-labels="['人数は「てげてげ」', ...Array(19).map(() => ''), '人数は「しっかり」']"
           max="2"
           min="0"
-          step="0.1" />
+          step="0.1"
+        />
         <v-slider
           v-model="userData.continuityWeight"
           :tick-labels="['連勤は「少なめ」', ...Array(9).map(() => ''), '連勤は「多め」']"
           max="1"
           min="0"
-          step="0.1" />
+          step="0.1"
+        />
       </v-flex>
     </v-layout>
   </v-container>

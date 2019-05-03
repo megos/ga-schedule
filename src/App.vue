@@ -3,7 +3,8 @@
     <v-toolbar
       app
       dark
-      color="primary">
+      color="primary"
+    >
       <v-toolbar-title v-text="title" />
     </v-toolbar>
     <v-content>
