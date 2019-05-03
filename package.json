@@ -8,20 +8,22 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0-rc.1",
-    "@handsontable/vue": "^3.0.0",
+    "@babel/polyfill": "^7.4.4",
+    "@handsontable/vue": "^4.0.0",
     "genetic-js": "^0.1.14",
-    "handsontable": "^6.0.1",
-    "moment": "^2.22.2",
-    "vue": "^2.5.17",
-    "vuetify": "^1.2.0"
+    "handsontable": "^7.0.2",
+    "moment": "^2.24.0",
+    "vue": "^2.6.10",
+    "vuetify": "^1.5.14"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.1",
-    "@vue/cli-plugin-eslint": "^3.0.1",
-    "@vue/cli-service": "^3.0.1",
-    "@vue/eslint-config-airbnb": "^3.0.4",
-    "vue-cli-plugin-vuetify": "^0.2.1",
-    "vue-template-compiler": "^2.5.17"
+    "@megos/eslint-config-vue": "^0.0.2",
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-plugin-eslint": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "vue-cli-plugin-vuetify": "^0.5.0",
+    "vue-template-compiler": "^2.6.10"
   }
 }
