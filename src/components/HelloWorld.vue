@@ -124,6 +124,7 @@ export default {
         data: null,
         rowHeaderWidth: 100,
         contextMenu: true,
+        licenseKey: 'non-commercial-and-evaluation',
       },
       userData: {
         charset: '×○',
