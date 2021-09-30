@@ -11,7 +11,7 @@
     "@babel/polyfill": "^7.4.4",
     "@handsontable/vue": "^4.0.0",
     "genetic-js": "^0.1.14",
-    "handsontable": "^7.1.0",
+    "handsontable": "^10.0.0",
     "moment": "^2.24.0",
     "vue": "^2.6.10",
     "vuetify": "^1.5.16"
