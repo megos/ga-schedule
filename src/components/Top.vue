@@ -192,11 +192,12 @@
   const tableRef = ref<{ hotInstance: Handsontable } | null>(null)
 
   function change () {
-    const startCols = adapter.getDiff(to.value, from.value, 'days')
+    const startCols = adapter.getDiff(to.value, from.value, 'days') + 1
     hotSettings.value.startCols = startCols
     hotSettings.value.colHeaders = Array.from({ length: startCols }).map((_, idx) => toYYMM(adapter.addDays(from.value, idx) as Date))
     hotSettings.value.startRows = startRows.value
     hotSettings.value.rowHeaders = Array.from({ length: startRows.value }).map((_, idx) => `クルー${idx + 1}`)
+    hotSettings.value.data = Array.from({ length: startRows.value }).map(() => Array.from({ length: startCols }).map(() => ''))
     tableRef.value?.hotInstance?.updateSettings(hotSettings.value)
   }
   function generate () {
@@ -217,15 +218,16 @@
   onMounted(change)
 
   const hotSettings = ref({
+    data: [] as string[][],
     startRows: 7,
     startCols: 31,
     rowHeaders: [] as string[],
     colHeaders: [] as string[],
     rowHeaderWidth: 100,
-    columns: Array.from({ length: 31 }).map(() => ({
+    columns: () => ({
       type: 'dropdown',
       source: ['○', '×', ''],
-    })),
+    }),
     height: 'auto',
     themeName: 'ht-theme-main',
     licenseKey: 'non-commercial-and-evaluation',
