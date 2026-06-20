@@ -17,16 +17,16 @@ export function createGenetic () {
   genetic.select1 = Genetic.Select1.Tournament2
   genetic.select2 = Genetic.Select2.Tournament2
 
-  genetic.seed = function () {
+  genetic.seed = () => {
     let text = ''
-    for (let i = 0; i < this.userData.col * this.userData.row; i++) {
-      text += this.userData.charset.charAt(Math.floor(Math.random()
-        * this.userData.charset.length))
+    for (let i = 0; i < genetic.userData.col * genetic.userData.row; i++) {
+      text += genetic.userData.charset.charAt(Math.floor(Math.random()
+        * genetic.userData.charset.length))
     }
     return text
   }
 
-  genetic.mutate = function (entity: string) {
+  genetic.mutate = (entity: string) => {
     const replaceAt = (str: string, index: number, character: string) => {
       return str.slice(0, Math.max(0, index)) + character + str.slice(index + character.length)
     }
@@ -36,8 +36,8 @@ export function createGenetic () {
     return replaceAt(
       entity,
       i,
-      this.userData.charset.charAt(Math.floor(Math.random()
-        * this.userData.charset.length)),
+      genetic.userData.charset.charAt(Math.floor(Math.random()
+        * genetic.userData.charset.length)),
     )
   }
 
@@ -58,19 +58,19 @@ export function createGenetic () {
     return [son, daughter]
   }
 
-  genetic.fitness = function (entity: string) {
+  genetic.fitness = (entity: string) => {
     let fitness = 0
 
-    for (let col = 0; col < this.userData.col; col++) {
+    for (let col = 0; col < genetic.userData.col; col++) {
       let workers = 0
-      for (let row = 0; row < this.userData.row; row++) {
-        const idx = col + (row * this.userData.col)
-        if (col < this.userData.col - 1 && entity[idx] === entity[idx + 1]) {
-          fitness += 1 - this.userData.continuityWeight
+      for (let row = 0; row < genetic.userData.row; row++) {
+        const idx = col + (row * genetic.userData.col)
+        if (col < genetic.userData.col - 1 && entity[idx] === entity[idx + 1]) {
+          fitness += 1 - genetic.userData.continuityWeight
         }
         workers += (entity[idx] === '○' ? 1 : 0)
       }
-      fitness += Math.abs(this.userData.needsEmployee - workers) * this.userData.employeeWeight
+      fitness += Math.abs(genetic.userData.needsEmployee - workers) * genetic.userData.employeeWeight
     }
     return fitness
   }
