@@ -65,8 +65,8 @@ export function createGenetic () {
       let workers = 0
       for (let row = 0; row < this.userData.row; row++) {
         const idx = col + (row * this.userData.col)
-        if (col < this.userData.col - 1 && entity[idx] === entity[idx + 1]) {
-          fitness += 1 - this.userData.continuityWeight
+        if (col < this.userData.col - 1 && entity[idx] === '○' && entity[idx + 1] === '○') {
+          fitness += this.userData.continuityWeight
         }
         workers += (entity[idx] === '○' ? 1 : 0)
       }
