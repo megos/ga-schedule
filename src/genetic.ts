@@ -33,19 +33,14 @@ export function createGenetic () {
 
     // chromosomal drift
     const i = Math.floor(Math.random() * entity.length)
-    return replaceAt(
-      entity,
-      i,
-      this.userData.charset.charAt(Math.floor(Math.random()
-        * this.userData.charset.length)),
-    )
+    return replaceAt(entity, i, this.userData.charset.replace(entity[i], ''))
   }
 
   genetic.crossover = (mother: string, father: string) => {
     // two-point crossover
     const len = mother.length
-    let ca = Math.floor(Math.random() * len)
-    let cb = Math.floor(Math.random() * len)
+    let ca = Math.floor(Math.random() * (len + 1))
+    let cb = Math.floor(Math.random() * (len + 1))
     if (ca > cb) {
       const tmp = cb
       cb = ca
