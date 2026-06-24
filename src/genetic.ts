@@ -19,7 +19,7 @@ export function createGenetic () {
 
   genetic.seed = function () {
     let text = ''
-    for (let i = 0; i < this.userData.col * this.userData.row; i++) {
+    for (let index = 0; index < this.userData.col * this.userData.row; index++) {
       text += this.userData.charset.charAt(Math.floor(Math.random()
         * this.userData.charset.length))
     }
@@ -32,20 +32,15 @@ export function createGenetic () {
     }
 
     // chromosomal drift
-    const i = Math.floor(Math.random() * entity.length)
-    return replaceAt(
-      entity,
-      i,
-      this.userData.charset.charAt(Math.floor(Math.random()
-        * this.userData.charset.length)),
-    )
+    const index = Math.floor(Math.random() * entity.length)
+    return replaceAt(entity, index, this.userData.charset.replace(entity[index], ''))
   }
 
   genetic.crossover = (mother: string, father: string) => {
     // two-point crossover
-    const len = mother.length
-    let ca = Math.floor(Math.random() * len)
-    let cb = Math.floor(Math.random() * len)
+    const { length } = mother
+    let ca = Math.floor(Math.random() * (length + 1))
+    let cb = Math.floor(Math.random() * (length + 1))
     if (ca > cb) {
       const tmp = cb
       cb = ca
@@ -62,15 +57,15 @@ export function createGenetic () {
     let fitness = 0
 
     for (let col = 0; col < this.userData.col; col++) {
-      let workers = 0
+      let employees = 0
       for (let row = 0; row < this.userData.row; row++) {
-        const idx = col + (row * this.userData.col)
-        if (col < this.userData.col - 1 && entity[idx] === entity[idx + 1]) {
-          fitness += 1 - this.userData.continuityWeight
+        const index = col + (row * this.userData.col)
+        if (col < this.userData.col - 1 && entity[index] === '○' && entity[index + 1] === '○') {
+          fitness += this.userData.continuityWeight
         }
-        workers += (entity[idx] === '○' ? 1 : 0)
+        employees += (entity[index] === '○' ? 1 : 0)
       }
-      fitness += Math.abs(this.userData.needsEmployee - workers) * this.userData.employeeWeight
+      fitness += Math.abs(this.userData.needsEmployee - employees) * this.userData.employeeWeight
     }
     return fitness
   }

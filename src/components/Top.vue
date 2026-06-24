@@ -82,11 +82,11 @@
       <v-col cols="12">
         以下デモ用
         <div>世代：{{ generation }}</div>
-        <div>評価値：100点満点中 {{ Math.round(100 - fitness) }}点</div>
+        <div>評価値：100点満点中 {{ Math.max(Math.round(100 - fitness), 0) }}点</div>
         <div>人数をゆるく → きびしく</div>
-        <v-slider v-model="userData.employeeWeight" max="2" min="0" step="0.1" />
+        <v-slider v-model="userData.employeeWeight" max="2" min="0.1" step="0.1" />
         <div>連勤をゆるく → きびしく</div>
-        <v-slider v-model="userData.continuityWeight" max="1" min="0" step="0.1" />
+        <v-slider v-model="userData.continuityWeight" max="1" min="0.1" step="0.1" />
       </v-col>
     </v-row>
   </v-container>
@@ -189,7 +189,7 @@
   })
 
   const generation = ref(0)
-  const fitness = ref(0)
+  const fitness = ref(100)
   const last = ref<string | null>(null)
 
   const today = new Date()
@@ -204,8 +204,8 @@
   }
   const userData = ref<GeneticUserData>({
     needsEmployee: 5,
-    employeeWeight: 0,
-    continuityWeight: 0,
+    employeeWeight: 1,
+    continuityWeight: 0.5,
     charset: '×○',
     col: 0,
     row: 0,
